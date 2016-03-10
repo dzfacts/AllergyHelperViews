@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+          
+  <title></title>
+  <link rel="stylesheet" href="">
+</head>
+<body>
+    <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Logo</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Componentes e Sinonimos</a></li>
+        <li><a href="#">Alergias</a></li>
+       <li><a href="#">Produtos</a></li>
+      </ul>
+    </div>
+  </nav><br>
+  <div class="container"><br>
+      <div class="row">
+        <form class="col s12">
+          <div class="row container">
+            <div class="col s10">
+              <label class="active" for="name">Name</label>
+              <input type="text" id="name" class="input-field s6">
+              <label class="active" for="pass">Password</label>
+              <input type="password" id="pass" class="input-field s6">
+              <button class="btn-large waves-effect waves-light" type="submit" name="action" style="float:right">
+                Login   
+              </button>
+              <a href="#" style="float:left">Create account</a>
+            </div>
+          </div>
+         
+        </form>
+      </div>
+    
+    <div id="users">
+    
+    </div>
+  </div>
+  
+  <script type="text/javascript">
+    var data = new Firebase('https://apptcc.firebaseio.com/');
+    var name = $("#name").val('');
+    var users = data.child("users");
+    var value="";
+    $("#addUsers").on('click',function(){
+         name = $("#name").val();
+         users.push().set({
+          'role': 'admin',
+          'name': name
+        })
+    })
+   
+  </script>
+</body>
+</html>

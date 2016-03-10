@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+          
+  <title></title>
+  <link rel="stylesheet" href="">
+</head>
+<body>
+    <br>
+  <div class="container"><br>
+      <div class="row">
+        <form class="col s12">
+          <div class="row container">
+            <div class="col s10">
+              <label class="active" for="email">E-Mail</label>
+              <input type="email" id="email" class="input-field s6" required="true">
+              <label class="active" for="pass">Password</label>
+              <input type="password" id="pass" class="input-field s6" required="true">
+              <button class="btn-large waves-effect waves-light" type="submit" id="create"  style="float:right">
+                Create User
+              </button>
+             
+            </div>
+          </div>
+         
+        </form>
+      </div>
+    
+    <div id="users">
+    
+    </div>
+  </div>
+  
+  <script type="text/javascript">
+    var data = new Firebase('https://apptcc.firebaseio.com/');
+    $("#create").click(function(){
+      var email = $("#email").val();
+      var pass = $("#pass").val();
+      data.createUser({
+        email : email,
+        password : pass
+      },function(error, userData){
+          if (error) {
+              console.log("Error creating user:", error);
+          } else {
+              console.log("Successfully created user account with uid:", userData.uid);
+          }
+      });
+    })
+  </script>
+</body>
+</html>

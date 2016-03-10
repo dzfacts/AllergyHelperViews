@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+          
+  <title></title>
+  <link rel="stylesheet" href="">
+</head>
+<body>
+    <nav>
+    <div class="nav-wrapper  teal lighten-2">
+      <a href="#!" class="brand-logo">AllergyHelper</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#" id="components">Componentes e Sinonimos</a></li>
+        <li><a href="#" id="allergies">Alergias</a></li>
+       <li><a href="#" id="products">Produtos</a></li>
+      </ul>
+    </div>
+  </nav><br>
+  <div id="content">
+    
+  </div>
+  
+  <script type="text/javascript">
+    $("#allergies").click(function(){
+       $("#content").load("scripts/allergies.html");
+    })
+    $("#components").click(function(){
+       $("#content").load("scripts/components.html");
+    })
+    $("#products").click(function(){
+       $("#content").load("scripts/products.html");
+    })
+
+   
+  </script>
+</body>
+</html>
