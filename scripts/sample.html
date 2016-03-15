@@ -7,7 +7,12 @@
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<link rel="stylesheet" href="/resources/demos/style.css">
-	<script src="resources/js/autocomplete.js" type="text/javascript" charset="utf-8" async defer ></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 	 <script>
   $(function() {
     
@@ -28,7 +33,7 @@
         }
       })
       .autocomplete({
-        minLength: 0,
+        minLength: 3,
         source: function( request, response ) {
           var lastUnicode = '\\uf8ff';
           var urlJoin = "https://allergyhelper3.firebaseio.com/substancies.json?orderBy=\"commonName\"&startAt=\""+extractLast( request.term )+"\"&endAt=\""+extractLast( request.term )+lastUnicode+"\"&print=pretty";
@@ -37,10 +42,7 @@
             data: { query: request.term },
             success: function (data) {
                 var transformed = $.map(data, function (el,key) {
-                    return {
-                        label: el.commonName,
-                        id: key
-                    };
+                    return { value: key, label: el.commonName, id: key };
                 });
                 response(transformed);
             },
