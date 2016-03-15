@@ -15,12 +15,6 @@
       return val.split( /,\s*/ );
     }
 
-    function getSugestions(){
-    	return substancies.orderByChild("name").equalTo("Água").on('child_added',function(snap){
-	  		return snap;
-		});
-    }
-
     function extractLast( term ) {
       return split( term ).pop();
     }
@@ -36,13 +30,15 @@
       .autocomplete({
         minLength: 0,
         source: function( request, response ) {
+          var lastUnicode = '\\uf8ff';
+          var urlJoin = "https://allergyhelper3.firebaseio.com/substancies.json?orderBy=\"commonName\"&startAt=\""+extractLast( request.term )+"\"&endAt=\""+extractLast( request.term )+lastUnicode+"\"&print=pretty";
            $.ajax({
-            url: "https://allergyhelper3.firebaseio.com/substancies.json",
+            url: urlJoin,
             data: { query: request.term },
             success: function (data) {
                 var transformed = $.map(data, function (el,key) {
                     return {
-                        label: el.name,
+                        label: el.commonName,
                         id: key
                     };
                 });
