@@ -6,14 +6,14 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	<link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-	 <script>
+   <script>
   $(function() {
     
     function split( val ) {
@@ -42,7 +42,7 @@
             data: { query: request.term },
             success: function (data) {
                 var transformed = $.map(data, function (el,key) {
-                    return { value: key, label: el.commonName, id: key };
+                    return { key: key, value: el.commonName};
                 });
                 response(transformed);
             },
@@ -56,13 +56,18 @@
         },
         select: function( event, ui ) {
           var terms = split( this.value );
+          var keys = split( $('#tags_id').val() );
           // remove the current input
           terms.pop();
+          keys.pop();
           // add the selected item
           terms.push( ui.item.value );
+          keys.push( ui.item.key );
           // add placeholder to get the comma-and-space at the end
           terms.push( "" );
+          keys.push( "" );
           this.value = terms.join( ", " );
+          $('#tags_id').val(keys.join( ", " ));
           return false;
         }
       });
@@ -71,10 +76,11 @@
 </head>
 <body>
 
-	<div class="ui-widget">
-	  <label for="tags">Tag programming languages: </label>
-	  <input id="tags" size="50">
-	</div>
+  <div class="ui-widget">
+    <label for="tags">Tag programming languages: </label>
+    <input id="tags" size="50">
+    <input id="tags_id" type="hidden">
+  </div>
 
 </body>
 </html>
