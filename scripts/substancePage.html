@@ -18,16 +18,21 @@
     <form method="post" action="" role="form">
         <div class="form-group">
             <!-- <label class="active" for="substancieSelect">Composição:</label> -->
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="checkboxSimilar" > Similar
+                </label>
+            </div>
             <div class="s2-example">
-                <div class="btn-group btn-group-sm" role="group" aria-label="Programmatic enabling and disabling">
+<!--                 <div class="btn-group btn-group-sm" role="group" aria-label="Programmatic enabling and disabling">
                     <button type="button" class="similar-enable btn btn-default">
                         Similar
                     </button>
                     <button type="button" class="similar-disable btn btn-default">
                         Não similar
                     </button>
-                </div>
-                <select class="subst-select form-control" id="similarSelect" multiple="multiple"></select>
+                </div> -->
+                <select class="subst-select form-control" id="similarSelect" multiple="multiple" disabled></select>
             </div>
         </div>
     </form>

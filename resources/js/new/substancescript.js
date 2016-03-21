@@ -6,37 +6,57 @@ $(function() {
 
     $(".subst-select").select2({
         placeholder: 'Use o enter para separar as substancias.',
-        minimumInputLength: 2,
-        language: {
-            inputTooShort: function() {
-                return 'Começe a digitar para pesquisar substâncias ou cria-las';
-            }
-        },
-        tags: true
-    });
-
-    $(".similar-enable").on("click", function() {
-        $(".subst-select").prop("disabled", false);
-    });
-
-    $(".similar-disable").on("click", function() {
-        $(".subst-select").prop("disabled", true);
-    });
-
-    var $button = $('.button-checkbox').find('button');
-    $('.button-checkbox').find('input:checkbox');
-
-    button = $widget.find('button'),
-            $checkbox = $widget.find('input:checkbox'),
-            color = $button.data('color'),
-            settings = {
-                on: {
-                    icon: 'glyphicon glyphicon-check'
-                },
-                off: {
-                    icon: 'glyphicon glyphicon-unchecked'
+            minimumInputLength: 2,
+            dataType: 'json',
+            language: {
+                inputTooShort: function() {
+                    return 'Começe a digitar para pesquisar substâncias ou cria-las';
                 }
-            };
+            },
+            createTag: function(params) {return null;},
+            ajax: {
+                url: 'https://allergyhelper3.firebaseio.com/substancies.json?',
+                dataType: 'json',
+                data: function(params) {
+                    var unicode = "\uf8ff";
+                    var startAt = '"' + params.term + '"';
+                    var endAt = '"' + params.term + unicode + '"';
+                    var query = {
+                        orderBy: "\"lowerCaseName\"",
+                        startAt: startAt.toLowerCase(),
+                        endAt: endAt.toLowerCase(),
+                        print: "\"pretty\""
+                    };
+                    // Query paramters will be ?search=[term]&page=[page]
+                    return query;
+                },
+                processResults: function(data, key) {
+                    responsejson = {
+                        results: $.map(data, function(obj, key) {
+                            return {
+                                id: key,
+                                lower: obj.lowerCaseName,
+                                text: obj.commonName
+                            };
+                        })
+                    };
+                    return responsejson;
+                }
+            }
+    });
+
+    // $(".similar-enable").on("click", function() {
+    //     $(".subst-select").prop("disabled", false);
+    // });
+
+    // $(".similar-disable").on("click", function() {
+    //     $(".subst-select").prop("disabled", true);
+    // });
+
+    $("#checkboxSimilar").change(function() {
+        var test = $(".subst-select").is(':disabled');
+        $(".subst-select").prop("disabled", test ? false:true);
+    });
 
 });
 
