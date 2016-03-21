@@ -1,86 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-  <title>jQuery UI Autocomplete - Multiple values</title>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-   <script>
-  $(function() {
-    
-    function split( val ) {
-      return val.split( /,\s*/ );
-    }
-
-    function extractLast( term ) {
-      return split( term ).pop();
-    }
- 
-    $( "#tags" )
-      // don't navigate away from the field on tab when selecting an item
-      .bind( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-          event.preventDefault();
-        }
-      })
-      .autocomplete({
-        minLength: 3,
-        source: function( request, response ) {
-          var lastUnicode = '\\uf8ff';
-          var urlJoin = "https://allergyhelper3.firebaseio.com/substancies.json?orderBy=\"commonName\"&startAt=\""+extractLast( request.term )+"\"&endAt=\""+extractLast( request.term )+lastUnicode+"\"&print=pretty";
-           $.ajax({
-            url: urlJoin,
-            data: { query: request.term },
-            success: function (data) {
-                var transformed = $.map(data, function (el,key) {
-                    return { key: key, value: el.commonName};
-                });
-                response(transformed);
-            },
-            error: function () {
-                response([]);
-            }
-        });        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-        select: function( event, ui ) {
-          var terms = split( this.value );
-          var keys = split( $('#tags_id').val() );
-          // remove the current input
-          terms.pop();
-          keys.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          keys.push( ui.item.key );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          keys.push( "" );
-          this.value = terms.join( ", " );
-          $('#tags_id').val(keys.join( ", " ));
-          return false;
-        }
-      });
-  });
-  </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Select 2 Test</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.js"></script>
+    <script src="resources/js/products.js"></script>
 </head>
+
 <body>
-
-  <div class="ui-widget">
-    <label for="tags">Tag programming languages: </label>
-    <input id="tags" size="50">
-    <input id="tags_id" type="hidden">
-  </div>
-
+    <h1 id="tags">Tagging support</h1>
+    <p>
+        Select2 can be used to quickly set up fields used for tagging.
+    </p>
+    <p>
+        Note that when tagging is enabled the user can select from pre-existing options or create a new tag by picking the first choice, which is what the user has typed into the search box so far.</p>
+    <p>
+        <select class="js-example-tags form-control" multiple="multiple"></select>
+    </p>
 </body>
+
 </html>
